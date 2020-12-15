@@ -39,3 +39,8 @@ y_pred = regressor.predict(X_test)
 # predict for employee with 12 years of experience
 # predict model arguement expects a matrix <T>[][]
 print(regressor.predict([[12]]))
+
+import pickle
+with open('regression_model', 'wb') as f:
+  pickle.dump(regressor, f)
+

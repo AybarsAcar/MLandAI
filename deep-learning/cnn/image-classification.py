@@ -1,7 +1,7 @@
 import numpy as np
 import tensorflow as tf
-from tensorflow.keras.preprocessing import image
 from tensorflow.keras.preprocessing.image import ImageDataGenerator  # to preprocess the images
+import pickle
 
 # Preprocessing the Training Set
 # Image Data Augmentations
@@ -63,20 +63,6 @@ cnn.compile(optimizer='adam', loss='binary_crossentropy', metrics=['accuracy'])
 
 cnn.fit(x=training_set, validation_data=test_set, epochs=25)
 
-# loading the test image
-test_image = image.load_img("../../data/dataset-cnn/single_prediction/cat_or_dog_1.jpg", target_size=(64, 64))
-test_image = image.img_to_array(test_image)
-test_image = np.expand_dims(test_image, axis=0)  # add an extra dimension corresponding to the batch
+# save the model as binary
+cnn.save('cnn_model.h5')
 
-result = cnn.predict(test_image)
-
-# encode 1 -> dog, 0 -> cat
-print(training_set.class_indices)
-
-prediction = ''
-if result[0][0] == 0:
-  prediction = 'cat'
-else:
-  prediction = 'dog'
-
-print(prediction)
